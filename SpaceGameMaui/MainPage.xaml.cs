@@ -4,6 +4,7 @@
     {
         GameState game = new GameState();
         GameDrawable drawable = new GameDrawable();
+        DateTime lastFrameTime;
 
         public MainPage()
         {
@@ -12,29 +13,43 @@
             drawable.Game = game;
             GameView.Drawable = drawable;
 
+            lastFrameTime = DateTime.UtcNow;
+
             Dispatcher.StartTimer(TimeSpan.FromMilliseconds(16), () =>
             {
-                game.Update();
+                var now = DateTime.UtcNow;
+                var deltaTime = (now - lastFrameTime).TotalSeconds;
+                lastFrameTime = now;
+
+                game.Update(deltaTime);
                 GameView.Invalidate();
                 return true;
             });
         }
 
-        private void OnLeft(object sender, EventArgs e)
+        private void OnLeftPressed(object? sender, EventArgs e)
         {
-            game.Ship.MoveLeft();
+            game.IsLeftPressed = true;
         }
 
-        private void OnRight(object sender, EventArgs e)
+        private void OnLeftReleased(object? sender, EventArgs e)
         {
-            game.Ship.MoveRight();
+            game.IsLeftPressed = false;
         }
 
-        private void OnShoot(object sender, EventArgs e)
+        private void OnRightPressed(object? sender, EventArgs e)
         {
-            game.Missiles.Add(
-                new Missile(game.Ship.X, game.Ship.Y + 0.1) // 🚀 important
-            );
+            game.IsRightPressed = true;
+        }
+
+        private void OnRightReleased(object? sender, EventArgs e)
+        {
+            game.IsRightPressed = false;
+        }
+
+        private void OnShoot(object? sender, EventArgs e)
+        {
+            game.Shoot();
         }
     }
 }

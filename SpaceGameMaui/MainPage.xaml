@@ -8,9 +8,9 @@
         <GraphicsView x:Name="GameView" HeightRequest="500"/>
 
         <HorizontalStackLayout HorizontalOptions="Center">
-            <Button Text="Left" Clicked="OnLeft"/>
+            <Button Text="Left" Pressed="OnLeftPressed" Released="OnLeftReleased"/>
             <Button Text="Shoot" Clicked="OnShoot"/>
-            <Button Text="Right" Clicked="OnRight"/>
+            <Button Text="Right" Pressed="OnRightPressed" Released="OnRightReleased"/>
         </HorizontalStackLayout>
 
     </VerticalStackLayout>

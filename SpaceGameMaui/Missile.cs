@@ -5,7 +5,7 @@
         public double X { get; set; }
         public double Y { get; set; }
 
-        private double speed = 0.05;
+        private double speed = 3.0;
 
         public Missile(double x, double y)
         {
@@ -13,9 +13,9 @@
             Y = y;
         }
 
-        public void Update()
+        public void Update(double deltaTime)
         {
-            Y += speed; // 🚀 UP (game logic)
+            Y += speed * deltaTime;
         }
 
         public bool IsOffScreen()

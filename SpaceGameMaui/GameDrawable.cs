@@ -4,10 +4,13 @@ namespace SpaceGameMaui
 {
     public class GameDrawable : IDrawable
     {
-        public GameState Game;
+        public GameState? Game;
 
         public void Draw(ICanvas canvas, RectF dirtyRect)
         {
+            if (Game is null)
+                return;
+
             float width = dirtyRect.Width;
             float height = dirtyRect.Height;
 
