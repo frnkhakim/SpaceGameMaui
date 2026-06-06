@@ -1,18 +1,116 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             Shell.NavBarIsVisible="False"
+             ios:Page.UseSafeArea="False"
              x:Class="SpaceGameMaui.MainPage">
 
-    <VerticalStackLayout>
+    <Grid>
+        <GraphicsView x:Name="GameView"
+                      HorizontalOptions="Fill"
+                      VerticalOptions="Fill"/>
 
-        <GraphicsView x:Name="GameView" HeightRequest="500"/>
+        <Border x:Name="HudPanel"
+                VerticalOptions="Start"
+                HorizontalOptions="Start"
+                Margin="12,40,12,0"
+                Padding="10,8"
+                StrokeThickness="0"
+                IsVisible="False"
+                BackgroundColor="#55000000">
+            <VerticalStackLayout Spacing="2">
+                <Label x:Name="ScoreLabel"
+                       Text="Score: 0"
+                       TextColor="White"
+                       FontAttributes="Bold"/>
+                <Label x:Name="TimerLabel"
+                       Text="Time: 00:00.00"
+                       TextColor="White"/>
+            </VerticalStackLayout>
+        </Border>
 
-        <HorizontalStackLayout HorizontalOptions="Center">
-            <Button Text="Left" Pressed="OnLeftPressed" Released="OnLeftReleased"/>
-            <Button Text="Shoot" Clicked="OnShoot"/>
-            <Button Text="Right" Pressed="OnRightPressed" Released="OnRightReleased"/>
-        </HorizontalStackLayout>
+        <Border x:Name="ControlsPanel"
+                VerticalOptions="End"
+                HorizontalOptions="Center"
+                Margin="12,0,12,18"
+                Padding="10,8"
+                StrokeThickness="0"
+                IsVisible="False"
+                BackgroundColor="#55000000">
+            <HorizontalStackLayout Spacing="10">
+                <Button Text="Left" Pressed="OnLeftPressed" Released="OnLeftReleased"/>
+                <Button Text="Shoot" Clicked="OnShoot"/>
+                <Button Text="Right" Pressed="OnRightPressed" Released="OnRightReleased"/>
+            </HorizontalStackLayout>
+        </Border>
 
-    </VerticalStackLayout>
+        <Grid x:Name="IntroOverlay"
+              BackgroundColor="#C0000000"
+              IsVisible="True">
+            <Border HorizontalOptions="Fill"
+                    VerticalOptions="Center"
+                MaximumWidthRequest="420"
+                    Padding="20"
+                    Margin="20"
+                    StrokeThickness="0"
+                    BackgroundColor="#FF1E1E1E">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Space Game"
+                           FontSize="32"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           HorizontalOptions="Center"/>
+                    <Label Text="How to play"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="White"/>
+                    <Label Text="Move left and right to line up shots.\nShoot all enemies before they descend to your ship.\nFaster wins rank higher on the top 10 leaderboard."
+                           TextColor="White"/>
+                    <Button Text="Start Game"
+                            Clicked="OnStartGame"/>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <Grid x:Name="GameOverOverlay"
+              BackgroundColor="#C0000000"
+              IsVisible="False">
+            <Border HorizontalOptions="Fill"
+                    VerticalOptions="Center"
+                MaximumWidthRequest="460"
+                    Padding="20"
+                    Margin="20"
+                    StrokeThickness="0"
+                    BackgroundColor="#FF1E1E1E">
+                <VerticalStackLayout Spacing="10">
+                    <Label x:Name="GameOverTitleLabel"
+                           Text="Game Over"
+                           FontSize="30"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           HorizontalOptions="Center"/>
+                    <Label x:Name="GameOverDetailsLabel"
+                           TextColor="White"/>
+                    <Label Text="Top 10 Fastest Wins"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="White"/>
+                    <Label x:Name="TopTenLabel"
+                           FontFamily="Courier New"
+                           TextColor="White"
+                           LineBreakMode="WordWrap"/>
+                    <HorizontalStackLayout Spacing="10">
+                        <Button Text="Play Again"
+                                HorizontalOptions="Fill"
+                                Clicked="OnPlayAgain"/>
+                        <Button Text="Back to Intro"
+                                HorizontalOptions="Fill"
+                                Clicked="OnBackToIntro"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </Grid>
 
 </ContentPage>
