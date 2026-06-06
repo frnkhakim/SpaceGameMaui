@@ -10,6 +10,7 @@
         private double elapsedSeconds;
         private bool isPlaying;
         private bool gameOverProcessed;
+        private bool timerStarted;
 
         public MainPage()
         {
@@ -18,6 +19,17 @@
             drawable.Game = game;
             GameView.Drawable = drawable;
 
+            ShowIntro();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (timerStarted)
+                return;
+
+            timerStarted = true;
             lastFrameTime = DateTime.UtcNow;
 
             Dispatcher.StartTimer(TimeSpan.FromMilliseconds(16), () =>
@@ -39,8 +51,6 @@
                 GameView.Invalidate();
                 return true;
             });
-
-            ShowIntro();
         }
 
         private void ShowIntro()
